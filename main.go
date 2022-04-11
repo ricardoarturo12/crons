@@ -22,9 +22,9 @@ var (
 
 func init() {
 	// script arguments
-	flag.StringVar(&serverHost, "host", "192.168.100.102", "Server ip or name to check.")
+	flag.StringVar(&serverHost, "host", "192.168.100.132", "Server ip or name to check.")
 	flag.IntVar(&serverPort, "port", 22, "Server TCP port to check.")
-	flag.IntVar(&checkInterval, "interval", 600, "Check interval in seconds.")
+	flag.IntVar(&checkInterval, "interval", 5, "Check interval in seconds.")
 	flag.IntVar(&checkTimeout, "timeout", 5, "Connection timeout in seconds.")
 	flag.BoolVar(&printOnlyErrors, "only_errors", false, "Print only fails.")
 	flag.Parse()
@@ -53,7 +53,7 @@ func main() {
 
 	defaultLogger.Printf("Starting tcp port check: %s\n", serverAddress)
 	for {
-		tcpConn, tcpErr := net.DialTimeout("tcp", serverAddress, timeout)
+		_, tcpErr := net.DialTimeout("tcp", serverAddress, timeout)
 
 		tcpResult := "FAIL"
 		if tcpErr == nil {
@@ -61,7 +61,7 @@ func main() {
 		}
 
 		if tcpResult == "OK" {
-			tcpConn.Close()
+			// tcpConn.Close()
 			defaultLogger.Printf("Connection success to \"%s\"\n", serverAddress)
 		} else {
 			errorLogger.Println("servidor caido")
