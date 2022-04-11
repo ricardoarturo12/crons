@@ -1,0 +1,7 @@
+version: '2'
+services:
+  sample-go:
+    build: .
+    environment:
+      - SERVER=$SERVER
+      - PORT=$PORT
