@@ -22,8 +22,9 @@ var (
 
 func init() {
 	// script arguments
-	flag.StringVar(&serverHost, "host", "192.168.102.214", "Server ip or name to check.")
-	flag.IntVar(&serverPort, "port", 22, "Server TCP port to check.")
+	flag.StringVar(&serverHost, "host", os.Getenv("SERVER"), "Server ip or name to check.")
+	sv, _ := strconv.Atoi(os.Getenv("PORT"))
+	flag.IntVar(&serverPort, "port", sv, "Server TCP port to check.")
 	flag.IntVar(&checkInterval, "interval", 5, "Check interval in seconds.")
 	flag.IntVar(&checkTimeout, "timeout", 5, "Connection timeout in seconds.")
 	flag.BoolVar(&printOnlyErrors, "only_errors", false, "Print only fails.")
@@ -52,7 +53,6 @@ func main() {
 	timeout := time.Second * time.Duration(checkTimeout)
 
 	defaultLogger.Printf("Starting tcp port check: %s\n", serverAddress)
-	// fmt.Println(os.Getenv("TEST_ENV"))
 	for {
 		_, tcpErr := net.DialTimeout("tcp", serverAddress, timeout)
 
