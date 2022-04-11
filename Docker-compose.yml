@@ -1,0 +1,6 @@
+version: '2'
+services:
+  sample-go:
+    build: .
+    # environment:
+    #   - TEST_ENV=test
