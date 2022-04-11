@@ -1,14 +1,23 @@
 # netcheck
-
-Script to check TCP Port checks.
+Script envía un email si el servidor está caído Protocolo TCP
 
 ## usage
 
 ```
-serverHost : servidor
-port: puerto
-interval: 600
-timeout: 5
+1. configurar archivo .env
+SERVER=
+PORT=
+FROM=
+TO=
+SUBJECT=
+EMAIL=
+PASSWORD=
+```
+
+
+```
+2.
+docker-compose up
 ```
 
 ## examples
