@@ -10,3 +10,4 @@ services:
       - SUBJECT=$SUBJECT
       - EMAIL=$EMAIL
       - PASSWORD=$PASSWORD
+      - INTERVAL=$INTERVAL
