@@ -8,6 +8,8 @@ import (
 	"os"
 	"strconv"
 	"time"
+
+	gomail "gopkg.in/gomail.v2"
 )
 
 var (
@@ -21,12 +23,28 @@ var (
 	errorPing       bool
 )
 
+func sendEmail() {
+	msg := gomail.NewMessage()
+	msg.SetHeader("From", os.Getenv("FROM"))
+	msg.SetHeader("To", os.Getenv("TO"))
+	msg.SetHeader("Subject", os.Getenv("SUBJECT"))
+	msg.SetBody("text/html", "<b>Servidor caido</b>")
+	// msg.Attach("/home/User/cat.jpg")
+
+	n := gomail.NewDialer("smtp.gmail.com", 587, os.Getenv("EMAIL"), os.Getenv("PASSWORD"))
+
+	// Send the email
+	if err := n.DialAndSend(msg); err != nil {
+		panic(err)
+	}
+}
+
 func init() {
 	// script arguments
 	flag.StringVar(&serverHost, "host", os.Getenv("SERVER"), "Server ip or name to check.")
 	sv, _ := strconv.Atoi(os.Getenv("PORT"))
 	flag.IntVar(&serverPort, "port", sv, "Server TCP port to check.")
-	flag.IntVar(&checkInterval, "interval", 30, "Check interval in seconds.")
+	flag.IntVar(&checkInterval, "interval", 5, "Check interval in seconds.")
 	flag.IntVar(&checkTimeout, "timeout", 5, "Connection timeout in seconds.")
 	flag.BoolVar(&printOnlyErrors, "only_errors", false, "Print only fails.")
 	flag.Parse()
@@ -66,6 +84,7 @@ func main() {
 		} else {
 			if !errorPing {
 				errorLogger.Println("servidor caido")
+				sendEmail()
 			}
 			errorPing = true
 			errorLogger.Println("servidor sigue caido")

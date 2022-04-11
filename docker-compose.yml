@@ -5,3 +5,8 @@ services:
     environment:
       - SERVER=$SERVER
       - PORT=$PORT
+      - FROM=$FROM
+      - TO=$TO
+      - SUBJECT=$SUBJECT
+      - EMAIL=$EMAIL
+      - PASSWORD=$PASSWORD
