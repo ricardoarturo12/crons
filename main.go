@@ -22,10 +22,10 @@ var (
 
 func init() {
 	// script arguments
-	flag.StringVar(&serverHost, "host", "192.168.102.214", "Server ip or name to check.")
+	flag.StringVar(&serverHost, "host", "192.168.100.102", "Server ip or name to check.")
 	flag.IntVar(&serverPort, "port", 22, "Server TCP port to check.")
-	flag.IntVar(&checkInterval, "interval", 1, "Check interval in seconds.")
-	flag.IntVar(&checkTimeout, "timeout", 60, "Connection timeout in seconds.")
+	flag.IntVar(&checkInterval, "interval", 600, "Check interval in seconds.")
+	flag.IntVar(&checkTimeout, "timeout", 5, "Connection timeout in seconds.")
 	flag.BoolVar(&printOnlyErrors, "only_errors", false, "Print only fails.")
 	flag.Parse()
 
